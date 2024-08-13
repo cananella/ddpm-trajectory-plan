@@ -1,5 +1,8 @@
 # DDPM Trajectory plan
 
+![image](https://github.com/user-attachments/assets/25c3c1ea-1f74-4b5a-8114-20a6fa01099f)
+
+
 ## moveit
 
 [source install moveit2](https://moveit.ros.org/install-moveit2/source/)
