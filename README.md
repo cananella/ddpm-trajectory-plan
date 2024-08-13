@@ -4,7 +4,7 @@
 
 [source install moveit2](https://moveit.ros.org/install-moveit2/source/)
 
----
+``` bash
 sudo apt install -y \
   build-essential \
   cmake \
@@ -39,8 +39,7 @@ export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
 cd $COLCON_WS
 colcon build --event-handlers desktop_notification- status- --cmake-args -DCMAKE_BUILD_TYPE=Release
 
----
-
+```
 
 
 
