@@ -1,0 +1,25 @@
+moveit_setup_assistant_config:
+  urdf:
+    package: dsr_description
+    relative_path: urdf/m0609.urdf
+  srdf:
+    relative_path: config/m0609.srdf
+  package_settings:
+    author_name: cananella
+    author_email: mango7460@naver.com
+    generated_timestamp: 1722913408
+  control_xacro:
+    command:
+      - position
+    state:
+      - position
+      - velocity
+  modified_urdf:
+    xacros:
+      - control_xacro
+  control_xacro:
+    command:
+      - position
+    state:
+      - position
+      - velocity
