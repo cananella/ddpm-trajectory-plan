@@ -1,1 +1,1 @@
-### DDPM Trajectory plan
+# DDPM Trajectory plan
