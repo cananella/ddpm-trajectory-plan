@@ -7,7 +7,7 @@ from tqdm.auto import tqdm
 from skvideo.io import vwrite
 import cv2
 import time
-from submodules.aruco import TShapeDetector
+from .submodules.aruco import TShapeDetector
 import subprocess
 import os
 import gdown
