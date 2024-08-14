@@ -7,3 +7,4 @@ src/moveit_msgs
 src/generate_parameter_library
 src/pusht/include
 .vscode
+README.md

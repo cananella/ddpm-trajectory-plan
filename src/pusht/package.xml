@@ -9,6 +9,8 @@
 
   <depend>rclpy</depend>
   <depend>m0609_interfaces</depend>
+
+  <depend>m0609_controller</depend>
   <depend>geometry_msgs</depend>
   <depend>sensor_msgs</depend>
 
