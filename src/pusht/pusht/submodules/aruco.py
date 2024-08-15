@@ -5,6 +5,7 @@ import cv2.aruco as aruco
 class TShapeDetector:
     def __init__(self, camera_index=0):
         self.cap = cv2.VideoCapture(camera_index)
+        self.fream = self.cap.read()
         
 
     def get_warped_image(self, frame, points):
@@ -74,6 +75,7 @@ class TShapeDetector:
 
                 # 원근 변환
                 warped = self.get_warped_image(frame, ordered_points)
+
                 return frame, warped
 
         return frame, frame
@@ -170,6 +172,7 @@ class TShapeDetector:
                         #             0.5, (255, 255, 255), 1)
 
                         # 결과 프레임 보기
+                        self.fream=processed_frame
                         cv2.imshow('Processed Frame', processed_frame)
 
                         if cv2.waitKey(1) & 0xFF == ord('q'):

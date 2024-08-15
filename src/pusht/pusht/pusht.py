@@ -1,4 +1,4 @@
-import submodules.diffusion_policy as dp
+from .submodules.diffusion_policy import get_resnet, replace_bn_with_gn, PushTImageDataset, ConditionalUnet1D,DDPMScheduler,PushTImageEnv,collections,normalize_data,unnormalize_data
 import torch
 import rclpy
 import torch.nn as nn
@@ -17,9 +17,9 @@ from m0609_controller.trajectoryplan_client import TrajectoryPlanClient
 
 def main():
     rclpy.init()
-    vision_encoder = dp.get_resnet('resnet18')
+    vision_encoder =  get_resnet('resnet18')
 
-    vision_encoder = dp.replace_bn_with_gn(vision_encoder)
+    vision_encoder =  replace_bn_with_gn(vision_encoder)
 
 
     package_path = get_package_share_directory('pusht')
@@ -36,7 +36,7 @@ def main():
     obs_horizon=2
     action_horizon=8
 
-    dataset = dp.PushTImageDataset(
+    dataset =  PushTImageDataset(
         dataset_path=dataset_path,
         pred_horizon=pred_horizon,       # 16
         obs_horizon=obs_horizon,         #  2
@@ -49,7 +49,7 @@ def main():
     obs_dim = vision_feature_dim + lowdim_obs_dim
     action_dim =2
 
-    noise_pred_net=dp.ConditionalUnet1D(
+    noise_pred_net= ConditionalUnet1D(
         input_dim=action_dim,
         global_cond_dim=obs_dim*obs_horizon
     )
@@ -60,7 +60,7 @@ def main():
     })
 
     num_diffusion_iters=100
-    noise_scheduler=dp.DDPMScheduler(
+    noise_scheduler= DDPMScheduler(
         num_train_timesteps=num_diffusion_iters,
         beta_schedule='squaredcos_cap_v2',
         clip_sample=True,
@@ -86,7 +86,7 @@ def main():
 
 
     max_steps=40
-    env=dp.PushTImageEnv()
+    env= PushTImageEnv()
     t_detector=TShapeDetector(0)
     client_service=TrajectoryPlanClient()
 
@@ -103,13 +103,14 @@ def main():
                 time.sleep(2.0)
                 continue
             cam_img=t_detector.frame
+
             break
 
 
         env.reset_to_state=np.array([agent_start_pos[0],agent_start_pos[1], centor[0],centor[1], angle])
         obs,info =env.reset()
 
-        obs_deque =dp.collections.deque(
+        obs_deque = collections.deque(
             [obs]*obs_horizon,maxlen=obs_horizon)
         imgs=[env.render(mode='rgb_array')]
         rewards=list()
@@ -125,7 +126,7 @@ def main():
                 images = np.stack([x['image'] for x in obs_deque])
                 agent_poses = np.stack([x['agent_pos']for x in obs_deque])
 
-                nagent_poses= dp.normalize_data(agent_poses,stats=stats['agent_pos'])
+                nagent_poses=  normalize_data(agent_poses,stats=stats['agent_pos'])
                 nimages=images
                 
                 nimages=torch.from_numpy(nimages).to(device,dtype=torch.float32)
@@ -168,7 +169,7 @@ def main():
                 naction = naction.detach().to('cpu').numpy()
                 # (B, pred_horizon, action_dim)
                 naction = naction[0]
-                action_pred = dp.unnormalize_data(naction, stats=stats['action'])
+                action_pred =  unnormalize_data(naction, stats=stats['action'])
 
                 # only take action_horizon number of actions
                 start = obs_horizon - 1
@@ -225,7 +226,10 @@ def main():
         if rewards[-1]>0.9:
             is_end=True
         client_service.send_request(action_list)
-        agent_start_pos=[action_list[-2][0],action_list[-2][1]]
+        try:
+            agent_start_pos=[action_list[-1][0],action_list[-1][1]]
+        except:
+            agent_start_pos=[50,50]
         action_list.clear()
         
 
