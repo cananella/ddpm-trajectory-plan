@@ -1,6 +1,9 @@
 # DDPM Trajectory plan
 
-![image](https://github.com/user-attachments/assets/25c3c1ea-1f74-4b5a-8114-20a6fa01099f)
+## preview
+
+![uploadT-ezgif com-video-to-gif-converter](https://github.com/user-attachments/assets/36050038-def9-49a7-83f7-900e180c593b)
+![3-ezgif com-video-to-gif-converter](https://github.com/user-attachments/assets/aa287dbe-6a9b-43f9-bdc6-9710ab3915b7)
 
 
 ## moveit
