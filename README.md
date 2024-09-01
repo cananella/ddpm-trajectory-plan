@@ -48,6 +48,45 @@ colcon build --event-handlers desktop_notification- status- --cmake-args -DCMAKE
 
 ```
 
+## doosan robotics m0609 manipulator moveit2
+
+``` bash
+ros2 launch m0609_moveit demo.launch.py
+```
+![image](https://github.com/user-attachments/assets/69402356-cd1d-4921-a729-82d6ce1f40e9)
+
+
+## real robot controller
+
+``` bash
+ros2 launch m0609_controller m0609_controller.launch.py
+```
+
+
+## hello moveit pkg
+``` bash
+# if you want to simulate on moveit use
+ros2 launch m0609_moveit demo.launch.py
+
+# if you want use real robot
+ros2 launch m0609_controller m0609_controller.launch.py
+```
+
+### get end effector pose
+```bash
+ros2 run hello_moveit get_eef_pos
+```
+![image](https://github.com/user-attachments/assets/2ac1ecf2-660a-4f56-b5ef-1eae21a7d27f)
+
+
+### key controller
+```bash
+ros2 run hello_moveit key_controll
+```
+![image](https://github.com/user-attachments/assets/ddc0b7b6-3d8b-4647-acac-f6add83718e4)
+
+
+
 
 ## diffusion env setting
 
