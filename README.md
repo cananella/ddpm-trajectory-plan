@@ -58,6 +58,7 @@ ros2 launch m0609_moveit demo.launch.py
 
 ## real robot controller
 
+port 127.0.0.1:8080~8083 is used
 ``` bash
 ros2 launch m0609_controller m0609_controller.launch.py
 ```
