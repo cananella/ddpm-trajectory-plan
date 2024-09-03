@@ -35,12 +35,13 @@ class JointState_Subscriber(Node):
         self.subscription
         self.joint_subscription
         self.arm_data = [0.0 , 0.0 , 0.0 , 0.0 , 0.0 , 0.0]
-        self.send_joint()
         self.trajectory_send_data=None
         self.is_execute=False
         self.waypoint_size=None
         self.befor_joint_state=self.arm_data
         
+        joint_recv_thread = threading.Thread(target=self.read_joint_state,daemon=True)
+        joint_recv_thread.start()
         data_send_thread = threading.Thread(target=self.send_trajectory_plan,daemon=True)
         data_send_thread.start()
         
@@ -51,8 +52,6 @@ class JointState_Subscriber(Node):
                 self.is_execute =False
                 self.arm_data = None
                 
-                
-
         
     def joint_listener_callback(self, msg: JointState):
         data_list = []
@@ -78,10 +77,20 @@ class JointState_Subscriber(Node):
         # print (self.arm_data)
         
     
-    def send_joint(self):
-        print(self.arm_data)
-        data = struct.pack('<6f', *self.arm_data)
-        self.connection.sendall(data)
+    def read_joint_state(self):
+        try:
+            while True:
+                # 데이터 수신 (joint positions)
+                data = self.connection.recv(24)  # float 6개의 배열이므로 4 * 6 = 24 bytes
+                if not data:
+                    print("No data received. Closing connection.")
+                    break
+
+                floats = struct.unpack('f' * 6, data)
+                self.robot_joint_state=np.deg2rad(floats)
+
+        except Exception as e:
+            print(f"An error occurred: {e}")
         
     def connecting_socket(self):
         ports = range(8080, 8083)  
