@@ -26,7 +26,7 @@ setup(
         'console_scripts': [
             'm0609_controller_server=m0609_controller.server:main',
             'm0609_controller_client=m0609_controller.client:main',
-            'm0609_trajectory_controller_client=m0609_controller.trajectory_client:main',
+            'm0609_trajectory_controller_client=m0609_controller.move_plan_trajectory_client:main',
             'm0609_trajectory_controller_server=m0609_controller.move_plan_trajectory_server:main',
             'trajectory_plan_server=m0609_controller.trajectoryplan_server:main',
             'trajectory_plan_client=m0609_controller.trajectoryplan_client:main',
