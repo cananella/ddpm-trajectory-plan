@@ -16,7 +16,7 @@ add_executable(hello_moveit src/hello_moveit.cpp)
 add_executable(get_eef_pos src/get_eef_pos.cpp)
 add_executable(key_controll src/key_controll.cpp)
 add_executable(movepose_test src/movepose_test.cpp)
-
+add_executable(movepose_test_2 src/movepose_test_2.cpp)
 add_executable(service_test src/pose_array_service_server_test.cpp)
 
 target_include_directories(hello_moveit PUBLIC
@@ -60,6 +60,15 @@ ament_target_dependencies(
 
 
 ament_target_dependencies(
+  movepose_test_2
+  "moveit_ros_planning_interface"
+  "rclcpp"
+  "tf2"
+  "tf2_geometry_msgs"
+)
+
+
+ament_target_dependencies(
   service_test
   "m0609_interfaces"
   "moveit_ros_planning_interface"
@@ -68,7 +77,7 @@ ament_target_dependencies(
   "tf2_geometry_msgs"
 )
 
-install(TARGETS hello_moveit get_eef_pos key_controll movepose_test service_test
+install(TARGETS hello_moveit get_eef_pos key_controll movepose_test movepose_test_2 service_test
   DESTINATION lib/${PROJECT_NAME})
 
 if(BUILD_TESTING)
