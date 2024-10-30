@@ -18,6 +18,7 @@ add_executable(key_controll src/key_controll.cpp)
 add_executable(movepose_test src/movepose_test.cpp)
 add_executable(movepose_test_2 src/movepose_test_2.cpp)
 add_executable(service_test src/pose_array_service_server_test.cpp)
+add_executable(umi_connecter src/umi_connecter.cpp)
 
 target_include_directories(hello_moveit PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
@@ -77,7 +78,16 @@ ament_target_dependencies(
   "tf2_geometry_msgs"
 )
 
-install(TARGETS hello_moveit get_eef_pos key_controll movepose_test movepose_test_2 service_test
+
+ament_target_dependencies(
+  umi_connecter
+  "moveit_ros_planning_interface"
+  "rclcpp"
+  "tf2"
+  "tf2_geometry_msgs"
+)
+
+install(TARGETS hello_moveit get_eef_pos key_controll movepose_test movepose_test_2 service_test umi_connecter
   DESTINATION lib/${PROJECT_NAME})
 
 if(BUILD_TESTING)

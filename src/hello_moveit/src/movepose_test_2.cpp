@@ -102,7 +102,7 @@ int main(int argc, char* argv[]) {
     moveit::planning_interface::MoveGroupInterface::Plan plan;
     arm_move_group_interface.setPlanningPipelineId("pilz_industrial_motion_planner");
     arm_move_group_interface.setPlannerId("PTP"); 
-    arm_move_group_interface.setPlanningTime(20.0);
+    arm_move_group_interface.setPlanningTime(20.0); 
  
     // moveit::planning_interface::PlanningSceneInterface planning_scene_interface;
     // auto collision_object=addCollision(arm_move_group_interface);
